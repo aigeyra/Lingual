@@ -1,0 +1,147 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+				xmlns:f="http://xmlns.jcp.org/jsf/core"
+				xmlns:h="http://xmlns.jcp.org/jsf/html"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils"
+				template="templates/lingual-template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="language" value="#{sessionManager.language}"/>
+		<f:viewParam name="mode" value="#{sessionManager.mode}"/>
+		<f:viewParam name="w" value="#{searchController.wordName}"/>
+	</f:metadata>
+
+	<ui:define name="title">
+		#{msgs.searchTitle}
+	</ui:define>
+	
+	<ui:define name="body">
+			
+		<h:form id="wordsForm">
+		
+			<div id="search" class="search">
+	
+				<table>
+					<tr>
+						<td class="text">
+							<h:inputText value="#{searchController.wordName}" 
+									     id="wordInput" 
+										 required="true" 
+										 requiredMessage="#{msgs.searchInputRM}"/>
+						</td>
+						<td class="button">
+							<h:commandButton id="submitButton"
+											 value="#{msgs.searchSearchButtonLabel}" 
+											 action="#{searchController.submit}">	
+								<f:ajax execute="wordInput" 
+										render=":showForm:panel message"/>
+							</h:commandButton>
+						</td>
+					</tr>
+					<tr>
+						<td class="message">
+							<h:message styleClass="searchRequiredMessage"
+									   for="wordInput"
+									   id="message"/>
+						</td>
+					</tr>				
+	   			</table>
+			</div>		
+			
+		</h:form>	
+		    
+		<h:form id="showForm">
+			
+			<h:panelGroup styleClass="searchShowPanel" id="panel" layout="block">
+				
+				<div class="showResult">
+					<table>
+						<tr>
+							<td>
+								<h:outputFormat value="#{msgs[searchController.resultMessage]}"
+												rendered="#{not empty searchController.result and searchController.showResult}">
+									<f:param value="#{searchController.resultSize}"/>
+								</h:outputFormat>
+								<h:outputFormat value="#{msgs.searchTooManyItemsFoundLabel}"
+											    rendered="#{not empty searchController.result and not searchController.showResult}">
+									<f:param value="#{searchController.resultSize}"/>
+								</h:outputFormat>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:commandButton id="showResultButton"
+												 value="#{msgs.searchShowResultButtonLabel}"
+												 action="#{searchController.showResultAction}" 
+												 rendered="#{not empty searchController.result and not searchController.showResult}">
+									<f:ajax render="panel"/>
+								</h:commandButton>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<table class="resultTable">
+					<tr>
+						<td class="resultData">
+							<ui:fragment rendered="#{not empty searchController.result and searchController.showResult}">
+								<div class="wordList">
+									<span class="listHeading">
+										<h:outputText id="searchResult"
+										  			  value="#{msgs.searchResultLabel}"/>
+									</span>
+									<utils:wordList id="wordList"
+													valueBean="#{searchController}"
+													value="result"
+													property="selectedWord"
+													actionListener="#{searchController.selectedWordHistoryListener}"/>
+								</div>
+												
+							</ui:fragment>	
+						</td>
+						<td class="gap">
+						</td>
+						<td class="resultData">
+							<h:panelGroup class="wordList" layout="block" rendered="#{not empty sessionManager.searchHistoryArray}">
+								<span class="listHeading">
+									<h:outputText id="searchHistoryLabel"
+									  			  value="#{msgs.searchHistoryLabel}"/>
+								</span>
+								<utils:wordList id="wordHistoryList"
+												valueBean="#{sessionManager}"
+												value="searchHistoryArray"
+												property="selectedWord"
+												actionListener="#{searchController.selectedWordListener}"/>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+
+			</h:panelGroup>	
+		
+			<p:overlayPanel widgetVar="displayOP" 
+						    showEffect="fade" 
+						    hideEffect="fade" 
+						    dismissable="true" 
+						    showCloseIcon="true">    
+
+				<p:outputPanel id="detail">	            
+					<div class="words">
+						<h:form>
+							<utils:wordInfo value="#{searchController.selectedWord}"/>
+						</h:form>
+					</div>                
+				</p:outputPanel>
+
+			</p:overlayPanel>			
+		</h:form>		
+	</ui:define>
+			
+	<ui:define name="footer">
+		<h:link value="Useful links" outcome="useful-links?language=#{sessionManager.language}&amp;mode=search"/>
+	</ui:define>
+	
+
+
+</ui:composition>

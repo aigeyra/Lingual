@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+				xmlns:f="http://xmlns.jcp.org/jsf/core"
+				xmlns:h="http://xmlns.jcp.org/jsf/html"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils"
+				template="templates/lingual-template.xhtml">
+				
+	<f:metadata>
+		<f:viewParam name="language" value="#{sessionManager.language}"/>
+		<f:viewParam name="mode" value="#{sessionManager.mode}"/>
+	</f:metadata>
+				
+					
+	<ui:define name="title">
+			#{msgs.usefulLinksTitle}
+	</ui:define>
+	
+	<ui:define name="body">
+		<ui:repeat var="link" value="#{languageOptionsManager.usefulLinksMap[sessionManager.language]}">
+			<ul>
+				<li>				
+					<a href="#{link}">#{link}</a>
+				</li>
+			</ul>
+		</ui:repeat>
+		
+		<div class="backToSearch">	
+			<h:button styleClass="backToSearch"
+					  id="backToSearch"
+					  outcome="search?language=#{sessionManager.language}&amp;mode=search"
+				      value="#{msgs.displayBackToWordSearchLinkLabel}"
+				      image="#{request.contextPath}/resources/images/back.png"/>
+						     
+		  	<p:tooltip id="backToSearchTooltip" 
+					   for="backToSearch" 
+					   value="Back to search"/>
+		</div>
+		
+	</ui:define>
+
+</ui:composition>

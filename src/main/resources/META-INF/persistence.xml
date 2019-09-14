@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+    xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+    version="2.0">
+
+  <persistence-unit name="lingual">
+		<class>lingual.entities.WordEn</class>
+		<class>lingual.entities.WordFr</class>
+		<class>lingual.entities.VerbFr</class>
+		<class>lingual.entities.VerbEn</class>
+		<class>lingual.entities.NounEn</class>
+		<class>lingual.entities.AdjectiveEn</class>
+		<class>lingual.entities.AdverbEn</class>
+		<class>lingual.entities.ConjunctionEn</class>
+		<class>lingual.entities.PrepositionEn</class>
+		<class>lingual.entities.PronounEn</class>
+		<class>lingual.entities.InterjectionEn</class>
+		<class>lingual.entities.DeterminerEn</class>
+
+    <properties>
+      <property name="javax.persistence.jdbc.user" value="root" />
+      <property name="eclipselink.ddl-generation" value="create-tables" />
+    </properties>
+
+  </persistence-unit>
+
+</persistence>

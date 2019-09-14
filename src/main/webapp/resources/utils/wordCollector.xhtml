@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"                                                                     
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">                                                                       
+<html xmlns="http://www.w3.org/1999/xhtml"                                                                                         
+      xmlns:h="http://xmlns.jcp.org/jsf/html"                                                                                      
+      xmlns:f="http://xmlns.jcp.org/jsf/core"                                                                                      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"                                                                                 
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">                                                                               
+                                                                                                                                   
+<cc:interface componentType="lingual.components.WordCollectorComponent">                                                           
+	<cc:attribute name="id"/>                                                                                                      
+	<cc:attribute name="language" required="true"/>                                                                                
+	<cc:attribute name="wordType" required="true"/>                                                                                
+	<cc:attribute name="exerciseType" required="true"/>                                                                            
+	<cc:attribute name="value" type="lingual.entities.Word" required="true"/>                                                      
+	<cc:attribute name="styleClass"/>	       
+	<cc:attribute name="selection" required="false"/>                                                                                    
+</cc:interface>                                                                                                                    
+                                                                                                                                   
+<cc:implementation >                                                                                                               
+	<h:outputStylesheet name="utils-styles.css" library="utils/css"/>                                                              
+	<div id="#{cc.clientId}" class="#{cc.attrs.styleClass}">                                                                       
+                                                                                                                                   
+		<h:outputLabel id="nameLabel" for="nameValue" rendered="#{cc.renderName(cc.attrs.exerciseType)}"/>                     
+		<h:panelGrid columns="2" rendered="#{cc.renderName(cc.attrs.exerciseType)}">	                                       
+			<h:inputText id="nameValue"/>                                                                                      
+			<h:message id="nameValueMessage" for="nameValue"/>                                                                 
+		</h:panelGrid>	                                                                                                       
+		<h:panelGrid columns="2" styleClass="basic" rendered="#{cc.renderBasic(cc.attrs.exerciseType)}">	                   
+			<h:outputText id="typeLabel" rendered="#{cc.renderType(cc.attrs.exerciseType)}"/>		                           
+			<h:outputText id="definitionLabel" rendered="#{cc.renderDefinition(cc.attrs.exerciseType)}"/>                      
+			<h:inputText id="definitionValue" rendered="#{cc.renderDefinition(cc.attrs.exerciseType)}"/>                       
+			<h:outputText id="pluralLabel" rendered="#{cc.renderPlural(cc.attrs.exerciseType)}"/>                              
+			<h:inputText id="pluralValue" rendered="#{cc.renderPlural(cc.attrs.exerciseType)}"/>                               
+			<h:outputText id="pastTenseLabel" rendered="#{cc.renderPastTense(cc.attrs.exerciseType)}"/>                        
+			<h:inputText id="pastTenseValue" rendered="#{cc.renderPastTense(cc.attrs.exerciseType)}"/>                         
+			<h:outputText id="pastParticipleLabel" rendered="#{cc.renderPastParticiple(cc.attrs.exerciseType)}"/>              
+			<h:inputText id="pastParticipleValue" rendered="#{cc.renderPastParticiple(cc.attrs.exerciseType)}"/>			   
+			<h:outputText id="genderLabel" rendered="#{cc.renderGender(cc.attrs.exerciseType)}"/>                              
+			<h:inputText id="genderValue" rendered="#{cc.renderGender(cc.attrs.exerciseType)}"/>                               
+			<h:outputText id="verbGroupLabel" rendered="#{cc.renderVerbGroup(cc.attrs.exerciseType)}"/>                        
+			<h:inputText id="verbGroupValue" rendered="#{cc.renderVerbGroup(cc.attrs.exerciseType)}"/>			               
+			<h:outputText id="transitivityLabel" rendered="#{cc.renderTransitivity(cc.attrs.exerciseType)}"/>                  
+			<h:inputText id="transitivityValue" rendered="#{cc.renderTransitivity(cc.attrs.exerciseType)}"/>		           
+		</h:panelGrid>                                                                                                         
+	                                                                                                                               
+			                                                                                                                       
+		<h:panelGrid columns="2" styleClass="conjugation" rendered="#{cc.renderConjugation(cc.attrs.exerciseType)}">               
+			<f:facet name="header">                                                                                                
+				<h:outputText id="conjugation" value="Conjugation"/>                                                               
+			</f:facet>                                                                                                             
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderIndic(cc.attrs.exerciseType,cc.attrs.selection)}">                                                                            
+				<f:facet name="header">                                                                                            
+					<h:outputText id="indicLabel"/>                       
+				</f:facet>                                                                                                         
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}">                          
+					<f:facet name="header">                                                                                        
+						<h:outputText id="indicPreseLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">	                                                                                   
+						<h:outputLabel id="indicPreseP1sgLabel" for="indicPreseP1sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPreseP1sgValue"/>                                                                
+							<h:message id="indicPreseP1sgMessage" for="indicPreseP1sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPreseP2sgLabel" for="indicPreseP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPreseP2sgValue"/>                                                                
+							<h:message id="indicPreseP2sgMessage" for="indicPreseP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPreseP3sgLabel" for="indicPreseP3sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPreseP3sgValue"/>                                                                
+							<h:message id="indicPreseP3sgMessage" for="indicPreseP3sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPreseP1plLabel" for="indicPreseP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPreseP1plValue"/>                                                                
+							<h:message id="indicPreseP1plMessage" for="indicPreseP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPreseP2plLabel" for="indicPreseP2plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPreseP2plValue"/>                                                                
+							<h:message id="indicPreseP2plMessage" for="indicPreseP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPreseP3plLabel" for="indicPreseP3plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPreseP3plValue"/>                                                                
+							<h:message id="indicPreseP3plMessage" for="indicPreseP3plValue"/>                                      
+						</h:panelGrid>                                                                                             
+					</h:panelGrid>                                                                                                 
+				</h:panelGrid>                                                                                                     
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}">	                       
+					<f:facet name="header">		                                                                                   
+						<h:outputText id="indicPasscLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">			                                                                           
+						<h:outputLabel id="indicPasscP1sgLabel" for="indicPasscP1sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPasscP1sgValue"/>                                                                
+							<h:message id="indicPasscP1sgMessage" for="indicPasscP1sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPasscP2sgLabel" for="indicPasscP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPasscP2sgValue"/>                                                                
+							<h:message id="indicPasscP2sgMessage" for="indicPasscP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPasscP3sgLabel" for="indicPasscP3sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPasscP3sgValue"/>                                                                
+							<h:message id="indicPasscP3sgMessage" for="indicPasscP3sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPasscP1plLabel" for="indicPasscP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPasscP1plValue"/>                                                                
+							<h:message id="indicPasscP1plMessage" for="indicPasscP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPasscP2plLabel" for="indicPasscP2plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPasscP2plValue"/>                                                                
+							<h:message id="indicPasscP2plMessage" for="indicPasscP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicPasscP3plLabel" for="indicPasscP3plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicPasscP3plValue"/>                                                                
+							<h:message id="indicPasscP3plMessage" for="indicPasscP3plValue"/>                                      
+						</h:panelGrid>                                                                                             
+					</h:panelGrid>                                                                                                 
+				</h:panelGrid>                                                                                                     
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}">                          
+					<f:facet name="header">                                                                                        
+						<h:outputText id="indicImparLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">	                                                                                   
+						<h:outputLabel id="indicImparP1sgLabel" for="indicImparP1sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicImparP1sgValue"/>                                                                
+							<h:message id="indicImparP1sgMessage" for="indicImparP1sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicImparP2sgLabel" for="indicImparP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicImparP2sgValue"/>                                                                
+							<h:message id="indicImparP2sgMessage" for="indicImparP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicImparP3sgLabel" for="indicImparP3sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicImparP3sgValue"/>                                                                
+							<h:message id="indicImparP3sgMessage" for="indicImparP3sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicImparP1plLabel" for="indicImparP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicImparP1plValue"/>                                                                
+							<h:message id="indicImparP1plMessage" for="indicImparP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicImparP2plLabel" for="indicImparP2plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicImparP2plValue"/>                                                                
+							<h:message id="indicImparP2plMessage" for="indicImparP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicImparP3plLabel" for="indicImparP3plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicImparP3plValue"/>                                                                
+							<h:message id="indicImparP3plMessage" for="indicImparP3plValue"/>                                      
+						</h:panelGrid>                                                                                             
+					</h:panelGrid>		                                                                                           
+				</h:panelGrid>                                                                                                     
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}">                          
+					<f:facet name="header">                                                                                        
+						<h:outputText id="indicFutusLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">	                                                                                   
+						<h:outputLabel id="indicFutusP1sgLabel" for="indicFutusP1sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicFutusP1sgValue"/>                                                                
+							<h:message id="indicFutusP1sgMessage" for="indicFutusP1sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicFutusP2sgLabel" for="indicFutusP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicFutusP2sgValue"/>                                                                
+							<h:message id="indicFutusP2sgMessage" for="indicFutusP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicFutusP3sgLabel" for="indicFutusP3sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicFutusP3sgValue"/>                                                                
+							<h:message id="indicFutusP3sgMessage" for="indicFutusP3sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicFutusP1plLabel" for="indicFutusP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicFutusP1plValue"/>                                                                
+							<h:message id="indicFutusP1plMessage" for="indicFutusP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicFutusP2plLabel" for="indicFutusP2plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicFutusP2plValue"/>                                                                
+							<h:message id="indicFutusP2plMessage" for="indicFutusP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="indicFutusP3plLabel" for="indicFutusP3plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="indicFutusP3plValue"/>                                                                
+							<h:message id="indicFutusP3plMessage" for="indicFutusP3plValue"/>                                      
+						</h:panelGrid>                                                                                             
+					</h:panelGrid>                                                                                                 
+				</h:panelGrid>                                                                                                     
+			</h:panelGrid>                                                                                                         
+					                                                                                                               
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderImper(cc.attrs.exerciseType,cc.attrs.selection)}">                                                                            
+				<f:facet name="header">                                                                                            
+					<h:outputText id="imperLabel"/>                       
+				</f:facet>                                                                                                         
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderImperPrese(cc.attrs.exerciseType,cc.attrs.selection)}">                          
+					<f:facet name="header">                                                                                        
+						<h:outputText id="imperPreseLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">	                                                                                   
+						<h:outputLabel id="imperPreseP2sgLabel" for="imperPreseP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="imperPreseP2sgValue"/>                                                                
+							<h:message id="imperPreseP2sgMessage" for="imperPreseP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="imperPreseP1plLabel" for="imperPreseP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="imperPreseP1plValue"/>                                                                
+							<h:message id="imperPreseP1plMessage" for="imperPreseP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="imperPreseP2plLabel" for="imperPreseP2plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="imperPreseP2plValue"/>                                                                
+							<h:message id="imperPreseP2plMessage" for="imperPreseP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+					</h:panelGrid>                                                                                                 
+				</h:panelGrid>                                                                                                         
+			</h:panelGrid>                                                                                                         
+			                                                                                                                       
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderSubjo(cc.attrs.exerciseType,cc.attrs.selection)}">                                                                            
+				<f:facet name="header">                                                                                            
+					<h:outputText id="subjoLabel"/>                       
+				</f:facet>                                                                                                         
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}">                          
+					<f:facet name="header">                                                                                        
+						<h:outputText id="subjoPreseLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">	                                                                                   
+						<h:outputLabel id="subjoPreseP1sgLabel" for="subjoPreseP1sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPreseP1sgValue"/>                                                                
+							<h:message id="subjoPreseP1sgMessage" for="subjoPreseP1sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPreseP2sgLabel" for="subjoPreseP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPreseP2sgValue"/>                                                                
+							<h:message id="subjoPreseP2sgMessage" for="subjoPreseP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPreseP3sgLabel" for="subjoPreseP3sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPreseP3sgValue"/>                                                                
+							<h:message id="subjoPreseP3sgMessage" for="subjoPreseP3sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPreseP1plLabel" for="subjoPreseP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPreseP1plValue"/>                                                                
+							<h:message id="subjoPreseP1plMessage" for="subjoPreseP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPreseP2plLabel" for="subjoPreseP2plValue"/>
+	 					<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPreseP2plValue"/>                                                                
+							<h:message id="subjoPreseP2plMessage" for="subjoPreseP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPreseP3plLabel" for="subjoPreseP3plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPreseP3plValue"/>                                                                
+							<h:message id="subjoPreseP3plMessage" for="subjoPreseP3plValue"/>                                      
+						</h:panelGrid>                                                                                             
+					</h:panelGrid>                                                                                                 
+				</h:panelGrid>                                                                                                     
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}">                          
+					<f:facet name="header">                                                                                        
+						<h:outputText id="subjoPasseLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">	                                                                                   
+						<h:outputLabel id="subjoPasseP1sgLabel" for="subjoPasseP1sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPasseP1sgValue"/>                                                                
+							<h:message id="subjoPasseP1sgMessage" for="subjoPasseP1sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPasseP2sgLabel" for="subjoPasseP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPasseP2sgValue"/>                                                                
+							<h:message id="subjoPasseP2sgMessage" for="subjoPasseP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPasseP3sgLabel" for="subjoPasseP3sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPasseP3sgValue"/>                                                                
+							<h:message id="subjoPasseP3sgMessage" for="subjoPasseP3sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPasseP1plLabel" for="subjoPasseP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPasseP1plValue"/>                                                                
+							<h:message id="subjoPasseP1plMessage" for="subjoPasseP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPasseP2plLabel" for="subjoPasseP2plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPasseP2plValue"/>                                                                
+							<h:message id="subjoPasseP2plMessage" for="subjoPasseP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="subjoPasseP3plLabel" for="subjoPasseP3plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="subjoPasseP3plValue"/>                                                                
+							<h:message id="subjoPasseP3plMessage" for="subjoPasseP3plValue"/>                                      
+						</h:panelGrid>                                                                                             
+					</h:panelGrid>                                                                                                 
+				</h:panelGrid>                                                                                                     
+			</h:panelGrid>                                                                                                         
+			                                                                                                                       
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderCondi(cc.attrs.exerciseType,cc.attrs.selection)}">                                                                            
+				<f:facet name="header">                                                                                            
+					<h:outputText id="condiLabel"/>                       
+				</f:facet>	                                                                                                       
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}">                          
+					<f:facet name="header">                                                                                        
+						<h:outputText id="condiPreseLabel"/>                                                                       
+					</f:facet>                                                                                                     
+					<h:panelGrid columns="2">	                                                                                   
+						<h:outputLabel id="condiPreseP1sgLabel" for="condiPreseP1sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="condiPreseP1sgValue"/>                                                                
+							<h:message id="condiPreseP1sgMessage" for="condiPreseP1sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="condiPreseP2sgLabel" for="condiPreseP2sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="condiPreseP2sgValue"/>                                                                
+							<h:message id="condiPreseP2sgMessage" for="condiPreseP2sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="condiPreseP3sgLabel" for="condiPreseP3sgValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="condiPreseP3sgValue"/>                                                                
+							<h:message id="condiPreseP3sgMessage" for="condiPreseP3sgValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="condiPreseP1plLabel" for="condiPreseP1plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="condiPreseP1plValue"/>                                                                
+							<h:message id="condiPreseP1plMessage" for="condiPreseP1plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="condiPreseP2plLabel" for="condiPreseP2plValue"/>
+						<h:panelGrid columns="1">                                                                                  
+							<h:inputText id="condiPreseP2plValue"/>                                                                
+							<h:message id="condiPreseP2plMessage" for="condiPreseP2plValue"/>                                      
+						</h:panelGrid>                                                                                             
+						<h:outputLabel id="condiPreseP3plLabel" for="condiPreseP3plValue"/>
+						<h:panelGrid columns="1">
+							<h:inputText id="condiPreseP3plValue"/>
+							<h:message id="condiPreseP3plMessage" for="condiPreseP3plValue"/>
+						</h:panelGrid>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>		
+			
+		</h:panelGrid>
+
+		
+		
+	</div>
+</cc:implementation>
+
+</html>

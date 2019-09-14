@@ -1,0 +1,152 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+				xmlns:f="http://xmlns.jcp.org/jsf/core"
+				xmlns:h="http://xmlns.jcp.org/jsf/html"		
+				xmlns:p="http://primefaces.org/ui"		
+				xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils"
+				template="templates/lingual-template.xhtml">
+				
+	<f:metadata>
+		<f:viewParam name="language" value="#{sessionManager.language}"/>
+		<f:viewParam name="mode" value="#{sessionManager.mode}"/>
+	</f:metadata>
+					
+	<ui:define name="title">
+		#{msgs.exerciseOptionsTitle}
+	</ui:define>	
+	
+	<ui:define name="body">
+		
+		<h:form id="exerciseForm">
+			
+			<div class="exercises">	
+					
+				<ui:fragment rendered="#{sessionManager.language == 'English'}">
+					<h:commandLink id="englishDefinitionExerciseOptions"
+								   value="#{msgs.exerciseTitleENDEF}"
+								   action="exercise-options"
+								   actionListener="#{exerciseController.exerciseOptionsListener}"
+								   immediate="true">	
+						<f:ajax render="exerciseOptions"/>						   
+						<f:attribute name="exerciseType" value="enDef"/>
+					</h:commandLink>
+				</ui:fragment>
+				
+				<ui:fragment rendered="#{sessionManager.language == 'French'}">
+					<h:commandLink id="frenchConjugationExerciseOptions"
+								   value="#{msgs.exerciseTitleFRCON}"
+								   action="exercise-options"
+								   actionListener="#{exerciseController.exerciseOptionsListener}"
+								   immediate="true">
+						<f:ajax render="exerciseOptions"/>
+						<f:attribute name="exerciseType" value="frCon"/>
+					</h:commandLink>
+				</ui:fragment>
+					
+				<h:panelGrid columns="2">	
+							
+					<h:panelGroup id="exerciseOptions">
+						<ui:fragment rendered="#{exerciseController.exercise.exerciseType == 'enDef'}">
+							<h:panelGrid columns="1">
+								<h:panelGrid columns="2">
+									<h:panelGroup styleClass="slider"
+												  layout="block">
+										<h:outputLabel styleClass="sliderLabel" 
+													   value="#{msgs.exerciseLevelLabel}" 
+													   for="englishDefinitionExerciseLevelOutput"/>
+										<h:outputText id="englishDefinitionExerciseLevelOutput" 
+													  value="#{exerciseController.exercise.exerciseLevel}"/>
+										<h:inputHidden id="englishDefinitionExerciseLevel"
+										 			   value="#{exerciseController.exercise.exerciseLevel}"/>
+										<p:slider for="englishDefinitionExerciseLevel"
+										 		  display="englishDefinitionExerciseLevelOutput"
+										  		  minValue="1" 
+										  		  maxValue="3"
+										   		  style="width: 200px"/>
+									</h:panelGroup>
+									<h:commandButton id="englishDefinitionExerciseStart"
+													 value="Start"
+									  				 action="#{exerciseController.prepareExerciseAction}"/>
+								</h:panelGrid>
+							</h:panelGrid>
+						</ui:fragment>			
+						<ui:fragment rendered="#{exerciseController.exercise.exerciseType == 'frCon'}">
+							<h:panelGrid columns="1">
+								<h:panelGrid columns="2">
+									<h:panelGroup styleClass="slider"
+												  layout="block">
+										<h:outputLabel styleClass="sliderLabel"
+										 			   value="#{msgs.exerciseLevelLabel}"
+										  			   for="frenchConjugationExerciseLevelOutput"/>
+										<h:outputText id="frenchConjugationExerciseLevelOutput"
+										 			  value="#{exerciseController.exercise.exerciseLevel}"/>
+										<h:inputHidden id="frenchConjugationExerciseLevel"
+													   value="#{exerciseController.exercise.exerciseLevel}"/>
+										<p:slider for="frenchConjugationExerciseLevel"
+										 		  display="frenchConjugationExerciseLevelOutput"
+										  		  minValue="1"
+										   		  maxValue="3"
+										    	  style="width: 200px"/>
+									</h:panelGroup>
+									<h:commandButton id="frenchConjugationExerciseStart"
+									 				 value="Start"
+									 				 action="#{exerciseController.prepareExerciseAction}"/>
+								</h:panelGrid>
+
+								<h:messages styleClass="tensesSelectionRequiredMessage"/>
+								
+						        <h:panelGroup class="tensesSelection" layout="block">
+									<h:dataTable id="moodTensesSelection"
+												 styleClass="moodTensesSelection"
+											     value="#{exerciseOptionsManager.moodNames}"												
+												 var="mood"
+												 columnClasses="leftRadius,rightRadius"
+												 rowClasses="tensesSelectionRowColor">
+												 
+						                <f:facet name="caption">
+						                	<h:panelGroup styleClass="tenseSelectionCaption"
+						                				  layout="block">
+							                    <h:outputText value="#{msgs.exerciseFRCONTenseSelectionCaption}"/>
+						                    </h:panelGroup>
+						                </f:facet>
+						                
+										<h:column>											
+									        <h:selectBooleanCheckbox id="moodsSelection"
+									        						 value="#{exerciseController.selectedMoods[mood]}"
+									         						 binding="#{checkbox}">
+									        	<f:ajax render="tensesSelection" />
+									        </h:selectBooleanCheckbox>
+									        <h:outputLabel for="moodsSelection"
+									        			   value="#{mood}"/>									        
+										</h:column>
+										
+										<h:column>
+											<h:panelGrid id="tensesSelection"
+														 class="tensesTable"
+														 columns="2">
+												<h:selectManyCheckbox id="tenses"
+																	  class="tenses"																  
+																	  value="#{exerciseController.selectedTenses[mood]}" 
+																	  layout="pageDirection" 
+																	  required="true" 
+																	  requiredMessage="#{msgs.exerciseSelectAtLeastOneTenseRM} #{mood}" 
+																	  rendered="#{checkbox.value}">
+													<f:selectItems value="#{exerciseOptionsManager.getTenses(mood)}"/>	
+												</h:selectManyCheckbox>												
+											</h:panelGrid>
+										</h:column>										
+									</h:dataTable>									
+								</h:panelGroup>								        
+							</h:panelGrid>
+						</ui:fragment>
+					</h:panelGroup>	
+				
+				</h:panelGrid>	
+				
+			</div>	
+			
+		</h:form>		
+	
+	</ui:define>
+			
+</ui:composition>

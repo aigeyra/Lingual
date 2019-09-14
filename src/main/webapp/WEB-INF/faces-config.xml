@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+	<application>
+		<lifecycle>
+			<phase-listener>lingual.listeners.SessionPhaseListener</phase-listener>
+		</lifecycle>
+		<resource-bundle>
+			<base-name>
+				messages
+			</base-name>
+			<var>
+				msgs
+			</var>
+		</resource-bundle>
+	</application>
+	
+	<factory>
+	    <exception-handler-factory>
+	        lingual.exceptions.ViewExpiredExceptionHandlerFactory
+	    </exception-handler-factory>
+	</factory>
+</faces-config>

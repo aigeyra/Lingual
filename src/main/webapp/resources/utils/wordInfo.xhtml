@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+
+<cc:interface componentType="lingual.components.WordInfoComponent">
+	<cc:attribute name="id"/>
+	<cc:attribute name="exerciseType"/>
+	<cc:attribute name="value" type="lingual.entities.Word" required="true"/>
+	<cc:attribute name="styleClass" required="false"/>
+	<cc:attribute name="selection" required="false"/>  	
+</cc:interface>
+
+<cc:implementation >
+	<h:outputStylesheet name="utils-styles.css" library="utils/css"/>
+	<div id="#{cc.clientId}" class="#{cc.attrs.styleClass}">
+	
+		<h:outputText id="nameLabel" rendered="false"/>
+		<h2><h:outputText id="nameValue" rendered="#{cc.renderName(cc.attrs.exerciseType)}"/></h2>
+		<h:panelGrid columns="2" styleClass="basic" rendered="#{cc.renderBasic(cc.attrs.exerciseType)}">
+			<h:outputText id="typeLabel" rendered="#{cc.renderType(cc.attrs.exerciseType)}"/>
+			<h:outputText id="typeValue" styleClass="#{cc.getStyle()}" rendered="#{cc.renderType(cc.attrs.exerciseType)}"/>
+			<h:outputText id="definitionLabel" rendered="#{cc.renderDefinition(cc.attrs.exerciseType)}"/>
+			<h:outputText id="definitionValue" rendered="#{cc.renderDefinition(cc.attrs.exerciseType)}"/>
+			<h:outputText id="pluralLabel" rendered="#{cc.renderPlural(cc.attrs.exerciseType)}"/>
+			<h:outputText id="pluralValue" rendered="#{cc.renderPlural(cc.attrs.exerciseType)}"/>
+			<h:outputText id="pastTenseLabel" rendered="#{cc.renderPastTense(cc.attrs.exerciseType)}"/>
+			<h:outputText id="pastTenseValue" rendered="#{cc.renderPastTense(cc.attrs.exerciseType)}"/>
+			<h:outputText id="pastParticipleLabel" rendered="#{cc.renderPastParticiple(cc.attrs.exerciseType)}"/>
+			<h:outputText id="pastParticipleValue" rendered="#{cc.renderPastParticiple(cc.attrs.exerciseType)}"/>			
+			<h:outputText id="genderLabel" rendered="#{cc.renderGender(cc.attrs.exerciseType)}"/>
+			<h:outputText id="genderValue" rendered="#{cc.renderGender(cc.attrs.exerciseType)}"/>
+			<h:outputText id="verbGroupLabel" rendered="#{cc.renderVerbGroup(cc.attrs.exerciseType)}"/>
+			<h:outputText id="verbGroupValue" rendered="#{cc.renderVerbGroup(cc.attrs.exerciseType)}"/>			
+			<h:outputText id="transitivityLabel" rendered="#{cc.renderTransitivity(cc.attrs.exerciseType)}"/>
+			<h:outputText id="transitivityValue" rendered="#{cc.renderTransitivity(cc.attrs.exerciseType)}"/>		
+		</h:panelGrid>		
+
+		
+		<h:panelGrid columns="2" styleClass="conjugation" rendered="#{cc.renderConjugation(cc.attrs.exerciseType)}">
+			<f:facet name="header">
+				<h:outputText id="conjugation" value="Conjugation"/>
+			</f:facet>
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderIndic(cc.attrs.exerciseType,cc.attrs.selection)}"> 
+				<f:facet name="header">
+					<h:outputText id="indicLabel"/>
+				</f:facet>
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}">
+					<f:facet name="header">
+						<h:outputText id="indicPreseLabel" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>		
+					<h:outputText id="indicPreseP1sgValue" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPreseP2sgValue" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPreseP3sgValue" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPreseP1plValue" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPreseP2plValue" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPreseP3plValue" rendered="#{cc.renderIndicPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}">	
+					<f:facet name="header">		
+						<h:outputText id="indicPasscLabel" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>			
+					<h:outputText id="indicPasscP1sgValue" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPasscP2sgValue" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPasscP3sgValue" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPasscP1plValue" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPasscP2plValue" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicPasscP3plValue" rendered="#{cc.renderIndicPassc(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}">
+					<f:facet name="header">
+						<h:outputText id="indicImparLabel" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>
+					<h:outputText id="indicImparP1sgValue" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicImparP2sgValue" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicImparP3sgValue" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicImparP1plValue" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicImparP2plValue" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicImparP3plValue" rendered="#{cc.renderIndicImpar(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}">
+					<f:facet name="header">
+						<h:outputText id="indicFutusLabel" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>
+					<h:outputText id="indicFutusP1sgValue" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicFutusP2sgValue" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicFutusP3sgValue" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicFutusP1plValue" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicFutusP2plValue" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="indicFutusP3plValue" rendered="#{cc.renderIndicFutus(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+			</h:panelGrid>
+					
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderImper(cc.attrs.exerciseType,cc.attrs.selection)}">
+				<f:facet name="header">
+					<h:outputText id="imperLabel"/>
+				</f:facet>
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderImperPrese(cc.attrs.exerciseType,cc.attrs.selection)}">
+					<f:facet name="header">
+						<h:outputText id="imperPreseLabel" rendered="#{cc.renderImperPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>
+					<h:outputText id="imperPreseP2sgValue" rendered="#{cc.renderImperPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="imperPreseP1plValue" rendered="#{cc.renderImperPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="imperPreseP2plValue" rendered="#{cc.renderImperPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderSubjo(cc.attrs.exerciseType,cc.attrs.selection)}">
+				<f:facet name="header">
+					<h:outputText id="subjoLabel"/>
+				</f:facet>
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}">
+					<f:facet name="header">
+						<h:outputText id="subjoPreseLabel" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>
+					<h:outputText id="subjoPreseP1sgValue" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPreseP2sgValue" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPreseP3sgValue" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPreseP1plValue" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPreseP2plValue" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPreseP3plValue" rendered="#{cc.renderSubjoPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}">
+					<f:facet name="header">
+						<h:outputText id="subjoPasseLabel" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>
+					<h:outputText id="subjoPasseP1sgValue" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPasseP2sgValue" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPasseP3sgValue" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPasseP1plValue" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPasseP2plValue" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="subjoPasseP3plValue" rendered="#{cc.renderSubjoPasse(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" styleClass="mood" rendered="#{cc.renderCondi(cc.attrs.exerciseType,cc.attrs.selection)}">
+				<f:facet name="header">
+					<h:outputText id="condiLabel"/>
+				</f:facet>	
+				<h:panelGrid styleClass="tense" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}">
+					<f:facet name="header">
+						<h:outputText id="condiPreseLabel" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					</f:facet>
+					<h:outputText id="condiPreseP1sgValue" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="condiPreseP2sgValue" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="condiPreseP3sgValue" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="condiPreseP1plValue" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="condiPreseP2plValue" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+					<h:outputText id="condiPreseP3plValue" rendered="#{cc.renderCondiPrese(cc.attrs.exerciseType,cc.attrs.selection)}"/>
+				</h:panelGrid>
+			</h:panelGrid>
+		
+			
+		</h:panelGrid>
+
+	</div>
+</cc:implementation>
+
+</html>

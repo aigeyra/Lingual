@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+				xmlns:f="http://xmlns.jcp.org/jsf/core"
+				xmlns:h="http://xmlns.jcp.org/jsf/html"
+				xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils"
+				template="templates/lingual-template.xhtml">
+				
+	<f:metadata>
+		<f:viewParam name="language" value="#{sessionManager.language}"/>
+		<f:viewParam name="mode" value="#{sessionManager.mode}"/>
+		<f:viewParam name="level" value="#{exerciseController.exercise.exerciseLevel}"/>
+	</f:metadata>
+					
+	<ui:define name="title">
+		#{msgs[exerciseController.exerciseTitle]}
+	</ui:define>
+	
+	<ui:define name="body">
+		
+		<h:form id="exerciseForm">
+	
+			<h:panelGroup id="panel" layout="block">
+				
+				<div class="question">
+					<h:outputText value="#{exerciseController.exercise.exerciseQuestion}" escape="false"/>
+				</div>
+							
+				<h:panelGrid columns="1">
+								
+					<ui:fragment rendered="#{not exerciseController.evaluated}">
+						<div class="words">		  
+							<utils:wordCollector id="userResponse"			
+												 language="#{sessionManager.language}"					 	
+											 	 wordType="#{exerciseController.exercise.userWordType}"
+											 	 exerciseType="#{exerciseController.exercise.exerciseType}"
+											 	 selection="#{exerciseController.completeTenseSelection}"
+								 			 	 value="#{exerciseController.exercise.userWord}"/>
+						</div>						 			 	 
+					</ui:fragment>	 		 	 
+		
+					<h:commandButton id="evaluate"
+									 rendered="#{not exerciseController.evaluated}"
+									 value="#{msgs.exerciseEvaluateButtonLabel}"
+									 action="#{exerciseController.evaluateAction}">
+						<f:param name="eval" value="true"/>
+						<f:ajax execute="userResponse" render="panel :continueForm :score"/>
+						
+					</h:commandButton>	
+					
+					<h:panelGroup id="resultMessagePanel"
+								  layout="block"
+								  styleClass="#{exerciseController.resultMessage}"
+								  rendered="#{not empty exerciseController.resultMessage}">
+						<h:outputText id="resultMessage"								  
+									  value="#{msgs[exerciseController.resultMessage]}"/>
+					</h:panelGroup>
+					
+					<ui:fragment rendered="#{exerciseController.displayCorrectAnswer}">
+						<div class="words">
+							<h:outputText styleClass="correctAnswerLabel" 
+										  value="#{msgs.exerciseCorrectAnswerLabel}"/>
+							<utils:wordInfo id="correctAnswer"
+											exerciseType="#{exerciseController.exercise.exerciseType}"
+											selection="#{exerciseController.completeTenseSelection}"
+											value="#{exerciseController.exercise.selectedRandomWord}"/>
+						</div>	
+					</ui:fragment>			
+		
+				</h:panelGrid>
+				
+			</h:panelGroup>
+			
+		</h:form>
+		
+		<h:form id="continueForm">
+			
+			<h:commandButton id="continue"
+							 rendered="#{exerciseController.evaluated}"
+							 value="#{msgs.exerciseContinueButtonLabel}"
+							 action="#{exerciseController.exerciseAction}">		
+				<f:ajax execute=":exerciseForm" render=":exerciseForm :continueForm :score"/>	
+			</h:commandButton>
+	
+			<h:commandButton id="noIdea"
+							 rendered="#{not exerciseController.evaluated}"
+							 value="#{msgs.exerciseNoIdeaButtonLabel}"
+							 action="#{exerciseController.evaluateAction}">
+				<f:param name="eval" value="false"/>
+				<f:ajax execute=":exerciseForm" render=":exerciseForm :continueForm :score"/>
+			</h:commandButton>
+	
+		</h:form>	
+		
+		<div class="scoreTable">
+			<h:panelGrid id="score" styleClass="center" columns="3">
+				<h:outputText value="#{msgs.exerciseScoreAnswers}"/>
+				<h:outputText value="#{msgs.exerciseScoreSuccessRateLabel}"/>
+				<h:outputText value="#{msgs.exerciseScoreCompletedQuestionsLabel}"/>
+	
+				<h:panelGroup styleClass="answers">
+					<span class="correct">#{exerciseController.exercise.score.correctAnswers}</span>
+					/
+					<span class="incorrect">#{exerciseController.exercise.score.incorrectAnswers}</span>
+				</h:panelGroup>			
+				<h:panelGroup styleClass="successRate">
+					#{exerciseController.exercise.score.percentage}
+				</h:panelGroup>	
+				<h:panelGroup styleClass="questionsCount">
+					#{exerciseController.exercise.score.answersCount}
+				</h:panelGroup>	
+			</h:panelGrid> 
+		</div>
+	
+	</ui:define>
+	
+	<ui:define name="footer">
+	
+	</ui:define>
+
+
+
+</ui:composition>

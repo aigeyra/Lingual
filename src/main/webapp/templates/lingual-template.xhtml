@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<h:head>
+		<title>
+			<ui:insert name="title">Title</ui:insert>
+		</title>
+		<h:outputStylesheet name="styles.css" library="css"/>
+	</h:head>
+	
+	<h:body>
+		<div id="bg-wrapper">
+			<div class="container">
+	
+				<h:form id="form">
+					<div class="blv">
+						<div class="logo">
+							<h:commandLink action="#{sessionManager.startAction}">
+								<h:graphicImage name="logo.png" 
+								                library="images" style="border:0"/>
+							</h:commandLink>
+						</div>
+					</div>
+					
+					<div>
+						<table class="bar">
+							<tr>
+								<th class="left">
+
+									<h:commandLink value="#{sessionManager.language}" 
+												   action="branching?faces-redirect=true&amp;includeViewParams=true"
+												   styleClass="bar-item">
+										<f:setPropertyActionListener target="#{sessionManager.mode}" value="branching"/>
+									</h:commandLink>
+								</th>
+								<th class="right">
+
+									<h:commandLink id="exerciseOptions"
+												   value="#{msgs.exerciseOptionsLinkLabel}" 
+												   action="#{exerciseController.startAction}"
+												   styleClass="bar-item#{sessionManager.isActiveMode('exercise')}">
+										<f:setPropertyActionListener target="#{sessionManager.mode}" 
+																	 value="exercise"/>					
+									</h:commandLink>
+
+									<h:commandLink id="search"
+									               value="#{msgs.searchLinkLabel}" 
+												   action="#{searchController.startAction}"
+												   styleClass="bar-item#{sessionManager.isActiveMode('search')}">
+										<f:setPropertyActionListener target="#{sessionManager.mode}"
+																	 value="search"/>					
+									</h:commandLink>
+
+				
+								</th>
+							</tr>
+						</table>
+					</div>
+				</h:form>
+				
+				<div class="content">
+					
+					<div class="top">
+						<h1 class="title">
+							<ui:insert name="title">Title</ui:insert>
+						</h1>
+					</div>
+				
+					<div class="main">
+					
+						<ui:insert name="body">Body</ui:insert>
+					
+					</div>
+					
+					<div class="bottom">
+						<hr />
+						<table id="bottomTable">
+							<tr>
+								<td class="link">
+									<h:form id="startForm">
+										<h:commandLink action="#{sessionManager.startAction}">
+											<h:panelGrid columns="2" styleClass="languageOptionsLink">
+												<img src="#{request.contextPath}/resources/images/back_small.png"/>
+												<h:outputText value="#{msgs.backToLanguageOptionsLinkLabel}"/>
+											</h:panelGrid>
+										</h:commandLink>
+									</h:form>
+								</td>
+								<td class="link">
+									<ui:insert name="footer"></ui:insert>
+								</td>
+								<td class="link">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</h:body>
+</html>
